@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Network Status Checker</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: hotpink;
+      color: #140e0e;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: whitesmoke;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+      width: 300px;
+      text-align: center;
+    }
+    h2 {
+      color: #0b1413;
+      margin-bottom: 20px;
+    }
+    p {
+      margin: 10px 0;
+    }
+    #status.connected {
+      color: #0e100f;
+    }
+    #status.disconnected {
+      color: #0f0d0e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Network Connection Status Checker</h2>
+    <p>Status: <span id="status">Checking...</span></p>
+    <p>IP Address: <span id="ip">Fetching...</span></p>
+    <p>Download Speed: <span id="speed">Testing...</span></p>
+    <button onclick="runNetworkCheck()">Check Again</button>
+  </div>
+
+  <script>
+    async function runNetworkCheck() {
+      // 1. Check Internet Connection
+      try {
+        await fetch("https://www.google.com", { mode: "no-cors" });
+        document.getElementById("status").textContent = "Connected ✅";
+        document.getElementById("status").className = "connected";
+      } catch {
+        document.getElementById("status").textContent = "Disconnected ❌";
+        document.getElementById("status").className = "disconnected";
+        document.getElementById("ip").textContent = "Unavailable";
+        document.getElementById("speed").textContent = "0 Mbps";
+        return;
+      }
+
+      // 2. Get Public IP
+      fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("ip").textContent = data.ip;
+        })
+        .catch(() => {
+          document.getElementById("ip").textContent = "Unavailable";
+        });
+
+      // 3. Test Download Speed
+      const image = new Image();
+      const imageSizeInBytes = 2 * 1024 * 1024; // 2MB
+      const startTime = new Date().getTime();
+
+      image.onload = () => {
+        const endTime = new Date().getTime();
+        const durationInSeconds = (endTime - startTime) / 1000;
+        const bitsLoaded = imageSizeInBytes * 8;
+        const speedMbps = (bitsLoaded / durationInSeconds / 1024 / 1024).toFixed(2);
+        document.getElementById("speed").textContent = speedMbps + " Mbps";
+      };
+
+      image.onerror = () => {
+        document.getElementById("speed").textContent = "Test Failed";
+      };
+
+      image.src = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg?nn=" + Math.random();
+    }
+
+    // Run on page load
+    runNetworkCheck();
+  </script>
+</body>
+</html>
+
