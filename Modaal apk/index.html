@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./src/output.css">
+    <script src="https://kit.fontawesome.com/4e7d13f9a4.js" crossorigin="anonymous"></script>
+    <title>Profile share Modal | CodeHelp</title>
+    <style>
+        /* Modal hidden state */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            max-width: 90%;
+            border: 2px solid #ffffff59;
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 20px 25px;
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            z-index: 1001;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: transform 0.4s ease, opacity 0.3s ease;
+        }
+        /* Modal active (visible) */
+        .modal.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        /* Overlay hidden */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(28, 205, 214, 0.25), rgba(54, 15, 140, 0.25), rgba(30, 123, 163, 0.25)); /* Instagram gradient tint */
+            backdrop-filter: blur(1px); /* Background blur */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        /* Overlay visible */
+        .overlay.overlayactive {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* Social icons */
+        .social-links i {
+            font-size: 2rem;
+            margin: 10px;
+            transition: transform 0.3s, color 0.3s;
+        }
+        .social-links i:hover {
+            transform: scale(1.2);
+        }  
+        #whatsapp:hover { color: #25D366; }
+        #insta:hover { color: #E1306C; }
+        #linkedin:hover { color: #0077B5; }
+        #teligram:hover { color: #0088cc; }
+        #twitter:hover { color: #1DA1F2; }
+    </style>
+</head>
+<body class="bg-black text-white">
+
+    <!-- Profile Card -->
+    <section class="flex flex-col items-center justify-center h-screen">
+        <div class="flex flex-col items-center justify-center gap-4 border-2 bg-slate-950 mb-16 border-slate-700 rounded-lg p-6 shadow-lg shadow-slate-800">
+            <img src="./img/imgggg..jpg" alt="" height="200" width="150" class="rounded-full mt-10 p-4">
+            <h2 class="text-3xl font-bold">Prafull Singh</h2>
+            <p class="text-slate-400">Frontend Developer</p>
+
+            <div class="mb-10 flex flex-col lg:flex-row md:flex-row items-center justify-center">
+                <button onclick="openmodal()" class="border m-2 font-bold hover:bg-blue-700 hover:text-white transition-all duration-700 border-slate-700 rounded-lg p-3 shadow-lg">
+                    <i class="fa-solid fa-address-book"></i> Follow Me
+                </button>
+                <button class="border m-2 hover:bg-amber-50 hover:text-black transition-all duration-700 border-slate-700 rounded-lg p-3 shadow-lg">
+                    <i class="fa-solid fa-share"></i>
+                    <span class="font-bold">Share My Profile</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <section class="modal">
+        <div class="flex items-center justify-between w-full">
+            <h2 class="font-bold text-2xl">Contact Us</h2>
+            <i onclick="closemodal()" class="fa-solid fa-xmark cursor-pointer text-xl"></i>
+        </div>
+             
+         <div class="w-auto h-[0.5px] bg-amber-50 mt-5 mb-2"></div>
+
+        <div>
+            <h1 class="mb-5 font-bold">Connect Via</h1>
+            <div class="social-links rounded-full">
+                <a id="insta" href="https://www.instagram.com/prafull.rajput_o7__/" target="_blank"><i class="fa-brands fa-square-instagram"></i></a>
+                <a id="whatsapp" href="https://wa.me/919770819738" target="_blank"><i class="fa-brands fa-square-whatsapp"></i></a>
+                <a id="linkedin" href="https://www.linkedin.com/in/prafull-singh" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                <a id="teligram" href="https://t.me/Mpcop1" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                <a id="twitter" href="https://x.com/Prafull002" target="_blank"><i class="fa-brands fa-square-twitter"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overlay -->
+    <div class="overlay" onclick="closemodal()"></div>
+
+    <!-- JS -->
+    <script src="script.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</body>
+</html>
+
+
+
